@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
+import ItemsList from '../items-list';
 
 class App extends Component {
   
@@ -15,10 +16,11 @@ class App extends Component {
   };
 
   render(){
-  
+    console.log(this.node);
     return (
       <div>
-        Hello
+        <button onClick={ () => console.log("down")}>Left</button>
+        <ItemsList props={this.state}/>
       </div>
     );
   }

@@ -1,0 +1,14 @@
+.items-list {
+    margin: 0 auto;
+    width: 465px;
+    height: 220px;
+    background-color: aquamarine;
+    overflow: hidden;
+}
+
+.items-list__wrap {
+    width: 99999px;
+    padding-top: 35px;
+    transition: margin-left 250ms;
+}
+
