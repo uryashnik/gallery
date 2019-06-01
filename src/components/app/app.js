@@ -9,16 +9,21 @@ class App extends Component {
     posX: 0,
     arr: [],
     length: 0,
-    width: 150,
+    width: 160,
   };
 
   apiService = new ApiService();
 
-  componentDidMount(){
+  componentDidMount = () => {
     this.apiService.getData()
-    .then((dataApi) => {
-    this.state.arr = dataApi;
-    })
+      .then(dataArr => {
+        this.setState((state) => {
+          return {
+            arr: dataArr,
+            length: dataArr.length
+          }
+        })
+      });
   };
 
   onBtnLeftClick = () => {
@@ -63,14 +68,13 @@ class App extends Component {
   onBtnEndClick = () => {
     this.setState((state) => {
       return {
-        posX: -(this.state.length * this.state.width)
+        posX: 4996
       }
     });
   };
 
   render() {
     console.log(this.state.posX)
-    console.log(this.state.arr)
     return (
 
       <div className="app-container">
