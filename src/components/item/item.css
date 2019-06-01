@@ -1,7 +1,12 @@
 .item {
-    width: 150px;
-    height: 150px;
     background-color: antiquewhite;
-    display: inline-block;
-    margin-right: 5px;
+    padding: 5px;
+    
+
+}
+
+.items {
+    transition: margin-left 250ms;
+    display: flex;
+    flex-wrap: nowrap;
 }

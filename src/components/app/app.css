@@ -1,0 +1,17 @@
+.app-container{
+    position: relative;
+}
+
+.pos__left {
+    position: absolute;
+    top: 80px;
+    left: 600px;
+    z-index: 2;
+}
+
+.pos__right {
+    position: absolute;
+    top: 80px;
+    right: 600px;
+    z-index: 2;
+}

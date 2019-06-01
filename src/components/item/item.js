@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './item.css';
 
-const Item = ({ data }) => {
-    const items = data.map((item) => {
+const Item = ({ arr }) => {
+    const items = arr.map((item) => {
         return (
             <div className='item' key={item.id}>
                 <img src={item.thumbnailUrl} />
@@ -11,11 +11,9 @@ const Item = ({ data }) => {
         )
     })
     return (
-        <div>
+        <div className='items' style={{transform: "translateX(-100%)" }}>
             {items}
         </div>
-
-        // <div className='item'></div>
     );
 };
 

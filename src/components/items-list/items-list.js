@@ -4,12 +4,12 @@ import './items-list.css';
 
 const ItemsList = ({state}) => {
 
-    const {position, data} = state;
-    console.log(data);
+    const {posX, arr} = state;
+    console.log(arr);
     return (
         <div className='items-list'>
-            <div className='items-list__wrap' style={{marginLeft: `${position}px`}}>
-                <Item data={data}/>
+            <div className='items-list__wrap' >
+                <Item arr={arr}/>
             </div>
         </div>
     );
