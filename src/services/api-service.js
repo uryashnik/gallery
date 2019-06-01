@@ -9,7 +9,7 @@ export default class ApiService {
           throw new Error(`Could not fetch ${this.url}` +
             `, received ${res.status}`)
         }
-        return res.json();
+        return await res.json();
       }
 };
 

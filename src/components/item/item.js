@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './item.css';
 
-const Item = ({ arr }) => {
+const Item = ({ props }) => {
+    const {arr, posX} = props;
     const items = arr.map((item) => {
         return (
             <div className='item' key={item.id}>
@@ -11,7 +12,7 @@ const Item = ({ arr }) => {
         )
     })
     return (
-        <div className='items' style={{transform: "translateX(-100%)" }}>
+        <div className='items' style={{transform: `translateX(-${25 * posX}%)` }}>
             {items}
         </div>
     );

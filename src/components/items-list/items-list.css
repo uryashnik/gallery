@@ -1,14 +1,10 @@
 .items-list {
     display: flex;
     justify-content: center;
- 
-
-
 }
 
 .items-list__wrap {
     width: 640px;
     overflow-x: hidden;
-
 }
 
