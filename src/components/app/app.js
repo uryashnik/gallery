@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
 import ItemsList from '../items-list';
+
 import './app.css';
 
 class App extends Component {
@@ -14,6 +15,8 @@ class App extends Component {
 
   apiService = new ApiService();
 
+
+
   componentDidMount = () => {
     this.apiService.getData()
       .then(dataArr => {
@@ -22,11 +25,12 @@ class App extends Component {
             arr: dataArr,
             length: dataArr.length
           }
-        })
-      });
+        }) 
+      })
+      .catch(error => console.log(error))
   };
 
-  onBtnLeftClick = () => {
+  onBtnRightClick = () => {
     if (this.state.posX < this.state.length - 4) {
       this.setState(({ posX }) => {
         return {
@@ -42,7 +46,7 @@ class App extends Component {
     }
   };
 
-  onBtnRightClick = () => {
+  onBtnLeftClick = () => {
     if (this.state.posX > 0) {
       this.setState(({ posX }) => {
         return {
@@ -74,13 +78,13 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.posX)
+    console.log(this.state.arr);
     return (
 
       <div className="app-container">
         <button onClick={this.onBtnLeftClick} className="pos pos__left">Left</button>
         <button onClick={this.onBtnRightClick} className="pos pos__right">Right</button>
-        <ItemsList props={this.state} />
+        {/* <ItemsList props={this.state} /> */}
         <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
         <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button>
       </div>
