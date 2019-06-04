@@ -33,8 +33,8 @@ export default class ApiService {
         `, received ${res.status}`)
     }
     const data =  await res.json();
-    const lenght = await this.getAmountAlbum(data);
-    return await this.getAlbums(data, lenght);
+    return await this.getAmountAlbum(data);
+    //return await this.getAlbums(data, lenght);
   
   }; 
 
