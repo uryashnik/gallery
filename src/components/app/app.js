@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
-import ItemsList from '../items-list';
+import Albums from "../albums";
 
 import './app.css';
 
@@ -8,10 +8,11 @@ class App extends Component {
 
   state = {
     posX: 0,
-    arr: [],
+    dataAlbums: {},
     length: 0,
-    width: 160,
+    width: 160
   };
+
 
   apiService = new ApiService();
 
@@ -22,8 +23,7 @@ class App extends Component {
       .then(dataArr => {
         this.setState((state) => {
           return {
-            arr: dataArr,
-            length: dataArr.length
+            dataAlbums: dataArr
           }
         }) 
       })
@@ -78,12 +78,14 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.arr);
+    console.log(this.state.dataAlbums);
     return (
 
       <div className="app-container">
         <button onClick={this.onBtnLeftClick} className="pos pos__left">Left</button>
         <button onClick={this.onBtnRightClick} className="pos pos__right">Right</button>
+        <Albums value={this.state.dataAlbums} />
+        
         {/* <ItemsList props={this.state} /> */}
         <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
         <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button>

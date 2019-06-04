@@ -2,14 +2,17 @@ export default class ApiService {
 
   url = 'https://jsonplaceholder.typicode.com/photos';
   /*Из полученного массива находим количество альбомов */
-  getAmountAlbum = async (res) => {
-    let count = 10;
-    res.forEach((item) => {
-      if(item.albumId > count){
-        count = item.albumId
-      };
+  getAmountAlbum = async res => {
+    let dataAlbums = { albums: [], data: res };
+    let count = 0;
+
+    res.forEach(item => {
+      if (item.albumId > count) {
+        count = item.albumId;
+        dataAlbums.albums.push(item.albumId);
+      }
     });
-    return count;
+    return dataAlbums;
   };
   /*Трансформируем массив обьектов в удобную разбивку, 
   массив содержащий отдельно массив для каждого альбома */
