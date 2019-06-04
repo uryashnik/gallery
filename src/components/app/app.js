@@ -9,6 +9,7 @@ class App extends Component {
   state = {
     posX: 0,
     dataAlbums: {},
+    albumId: 0,
     length: 0,
     width: 160
   };
@@ -28,6 +29,10 @@ class App extends Component {
         }) 
       })
       .catch(error => console.log(error))
+  };
+
+  onDefineAlbum = (id) => {
+    this.setState({albumId: id});
   };
 
   onBtnRightClick = () => {
@@ -79,16 +84,19 @@ class App extends Component {
 
   render() {
     console.log(this.state.dataAlbums);
+    
+    this.onDefineAlbum(3);
+    console.log(this.state.albumId);
     return (
 
       <div className="app-container">
-        <button onClick={this.onBtnLeftClick} className="pos pos__left">Left</button>
-        <button onClick={this.onBtnRightClick} className="pos pos__right">Right</button>
+        {/* <button onClick={this.onBtnLeftClick} className="pos pos__left">Left</button>
+        <button onClick={this.onBtnRightClick} className="pos pos__right">Right</button> */}
         <Albums value={this.state.dataAlbums} />
         
         {/* <ItemsList props={this.state} /> */}
-        <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
-        <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button>
+        {/* <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
+        <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button> */}
       </div>
     );
   }

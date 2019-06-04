@@ -5,7 +5,6 @@ export default class ApiService {
   getAmountAlbum = async res => {
     let dataAlbums = { albums: [], data: res };
     let count = 0;
-
     res.forEach(item => {
       if (item.albumId > count) {
         count = item.albumId;
