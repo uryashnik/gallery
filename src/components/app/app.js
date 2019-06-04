@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
 import Albums from "../albums";
-
+import Test from '../test';
+import ItemsList from '../items-list';
 import './app.css';
 
 class App extends Component {
@@ -11,9 +12,10 @@ class App extends Component {
     dataAlbums: {},
     albumId: 0,
     length: 0,
-    width: 160
+    width: 160,
+    slider: true,
+    tempArr: null
   };
-
 
   apiService = new ApiService();
 
@@ -26,13 +28,19 @@ class App extends Component {
           return {
             dataAlbums: dataArr
           }
-        }) 
+        })
       })
       .catch(error => console.log(error))
   };
 
-  onDefineAlbum = (id) => {
-    this.setState({albumId: id});
+  selectAlbum = (albumId) => {
+    this.setState({ albumId });
+  };
+
+  changeSlider = () => {
+    this.setState(({ slider }) => {
+      return { slider: !slider }
+    })
   };
 
   onBtnRightClick = () => {
@@ -66,34 +74,20 @@ class App extends Component {
     };
   };
 
-  onBtnStartClick = () => {
-    this.setState((state) => {
-      return {
-        posX: 0
-      }
-    });
-  };
-
-  onBtnEndClick = () => {
-    this.setState((state) => {
-      return {
-        posX: 4996
-      }
-    });
-  };
 
   render() {
-    console.log(this.state.dataAlbums);
-    
-    this.onDefineAlbum(3);
-    console.log(this.state.albumId);
+    console.log(this.state.slider);
+    const content = this.state.slider ? <ItemsList onChangeSlider={this.changeSlider}
+      posX={this.state.posX}
+      tempArr={this.state.tempArr}
+    /> : <Albums value={this.state.dataAlbums} onSelectAlbum={this.selectAlbum} onChangeSlider={this.changeSlider}/>
     return (
 
       <div className="app-container">
         {/* <button onClick={this.onBtnLeftClick} className="pos pos__left">Left</button>
         <button onClick={this.onBtnRightClick} className="pos pos__right">Right</button> */}
-        <Albums value={this.state.dataAlbums} />
-        
+        {content}
+        {/* <Test onSelectAlbum={this.selectAlbum}/> */}
         {/* <ItemsList props={this.state} /> */}
         {/* <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
         <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button> */}

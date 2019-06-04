@@ -8,3 +8,16 @@
     overflow-x: hidden;
 }
 
+.items {
+    transition: margin-left 250ms;
+    display: flex;
+    flex-wrap: nowrap;
+    transition: transform 0.25s ease-in-out;
+}
+
+.item {
+    background-color: antiquewhite;
+    padding: 5px;
+    
+
+}
