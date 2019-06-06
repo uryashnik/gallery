@@ -35,6 +35,14 @@ class App extends Component {
 
   selectAlbum = (albumId) => {
     this.setState({ albumId });
+    const gallery = this.state.dataAlbums.data.filter((item) => item.albumId === albumId);
+    this.setState((state) => {
+      return {tempArr: gallery}
+    });
+    if(this.state.tempArr){
+      console.log(this.state.tempArr);
+    }
+    
   };
 
   changeSlider = () => {
@@ -80,7 +88,7 @@ class App extends Component {
     const content = this.state.slider ? <ItemsList onChangeSlider={this.changeSlider}
       posX={this.state.posX}
       tempArr={this.state.tempArr}
-    /> : <Albums value={this.state.dataAlbums} onSelectAlbum={this.selectAlbum} onChangeSlider={this.changeSlider}/>
+      /> : <Albums value={this.state.dataAlbums} onSelectAlbum={this.selectAlbum} onChangeSlider={this.changeSlider}/>
     return (
 
       <div className="app-container">
