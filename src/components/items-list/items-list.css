@@ -12,9 +12,24 @@
   display: flex;
   flex-wrap: nowrap;
   transition: transform 0.15s ease-in-out;
+  position: relative;
 }
 
 .item {
   background-color: antiquewhite;
   padding: 5px;
+}
+
+.pos__left {
+  position: absolute;
+  top: 80px;
+  left: -10px;
+  z-index: 2;
+}
+
+.pos__right {
+  position: absolute;
+  top: 80px;
+  right: -10px;
+  z-index: 2;
 }

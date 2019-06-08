@@ -1,35 +1,47 @@
 import React from "react";
-import Item from "../item";
+//import Item from "../item";
 import "./items-list.css";
 
-const ItemsList = ({ onChangeSlider, posX, tempArr }) => {
-  const tempList = tempArr.map(item => {
+const ItemsList = ({ onChangeSlider, posX, 
+                    tempArr, isLoading, 
+                    onBtnRightClick, onBtnLeftClick 
+                    }) => { 
+  const imagesList = tempArr.map(item => {
     return (
       <div className="item" key={item.id}>
-        <img src={item.thumbnailUrl} />
+        <img src={item.thumbnailUrl} alt={item.id} />
       </div>
     );
   });
-  const imagesList = tempList;
+
+
+
+  return (
+    <div className="items-list">
+      {isLoading ? <div>Loading ...</div> : 
+      <div className="items-list__wrap" >
+        <div
+          className="items"
+          style={{ transform: `translateX(-${25 * posX}%)` }} >
+          {imagesList}
+        </div>
+        <button onClick={() => onBtnLeftClick()} className="pos pos__left">
+          Left
+        </button>
+        <button onClick={() => onBtnRightClick()} className="pos pos__right">
+          Right
+        </button >
+        <button onClick={() => onChangeSlider()} className="pos pos__back">К списку ...</button>
+      </div>}
+    </div>
+  );
+};
+
+export default ItemsList;
+
   //   <div className="items" style={{ transform: `translateX(-${25 * posX}%)` }}>
   //     <div className="item" key={posX}>
   //       <img src={tempArr[0].thumbnailUrl} />
   //       {/* {arr[posX]} */}
   //     </div>
   //   </div>;
-
-  return (
-    <div className="items-list">
-      <div className="items-list__wrap" onClick={() => onChangeSlider()}>
-        <div
-          className="items"
-          style={{ transform: `translateX(-${25 * posX}%)` }}
-        >
-          {imagesList}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ItemsList;

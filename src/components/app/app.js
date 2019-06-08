@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ApiService from "../../services/api-service";
 import Albums from "../albums";
-import Test from "../test";
+//import Test from "../test";
 import ItemsList from "../items-list";
 import "./app.css";
 
@@ -13,6 +13,7 @@ class App extends Component {
     length: 0,
     width: 160,
     slider: false,
+    isLoading: false,
     tempArr: []
   };
 
@@ -30,64 +31,49 @@ class App extends Component {
       })
       .catch(error => console.log(error));
   };
+  componentDidUpdate = (prevProps, prevState) => {
+    const {isLoading, slider} = this.state;
+
+    // if(prevState.slider !== slider){
+    //   this.setState(( state ) => ({isLoading: true}));
+    // };
+    if(isLoading){
+      const timer = setTimeout(() => (this.setState((state) => ({isLoading: !prevState.isLoading}))), 2000);
+      console.log(`didUpdate ${isLoading}`);
+    };
+  }
 
   selectAlbum = albumId => {
-    this.setState(state => {
-      return { albumId: albumId };
-    });
-    const gallery = this.state.dataAlbums.data.filter(
-      item => item.albumId === albumId
-    );
-    this.setState(state => {
-      return { tempArr: gallery, length: gallery.length };
-    });
+    this.setState(state => ({ albumId: albumId }));
+
+    const gallery = this.state.dataAlbums.data.filter(item => item.albumId === albumId);
+    this.setState(state => ({ tempArr: gallery, length: gallery.length }));
   };
 
   changeSlider = () => {
-    this.setState(({ slider }) => {
-      return { slider: !slider };
-    });
+      this.setState(({ slider, isLoading }) => ({slider: !slider, isLoading: true}));
   };
 
-  onBtnRightClick = () => {
-    if (this.state.posX < this.state.length - 4) {
-      this.setState(({ posX }) => {
-        return {
-          posX: posX + 1
-        };
-      });
-    } else {
-      this.setState(state => {
-        return {
-          posX: this.state.length - 4
-        };
-      });
-    }
+  BtnRightClick = () => {
+    this.state.posX < this.state.length - 4 ? this.setState(({ posX }) => ({posX: posX + 1})) :
+                                             this.setState(({length}) => ({ posX: length - 4}))
   };
 
-  onBtnLeftClick = () => {
-    if (this.state.posX > 0) {
-      this.setState(({ posX }) => {
-        return {
-          posX: posX - 1
-        };
-      });
-    } else {
-      this.setState({
-        posX: 0
-      });
-    }
+  BtnLeftClick = () => {
+    this.state.posX > 0 ? this.setState(({ posX }) => ({posX: posX - 1})) : 
+                          this.setState({ posX: 0 });
+
   };
 
   render() {
-    console.log(this.state.tempArr);
-    console.log(this.state.length);
-    console.log(this.state.tempArr.length);
     const content = this.state.slider ? (
       <ItemsList
         onChangeSlider={this.changeSlider}
         posX={this.state.posX}
         tempArr={this.state.tempArr}
+        isLoading={this.state.isLoading}
+        onBtnRightClick={this.BtnRightClick}
+        onBtnLeftClick={this.BtnLeftClick}
       />
     ) : (
       <Albums
@@ -98,17 +84,7 @@ class App extends Component {
     );
     return (
       <div className="app-container">
-        <button onClick={this.onBtnLeftClick} className="pos pos__left">
-          Left
-        </button>
-        <button onClick={this.onBtnRightClick} className="pos pos__right">
-          Right
-        </button>
         {content}
-        {/* <Test onSelectAlbum={this.selectAlbum}/> */}
-        {/* <ItemsList props={this.state} /> */}
-        {/* <button onClick={this.onBtnStartClick} className="pos pos___start">Start</button>
-        <button onClick={this.onBtnEndClick} className="pos pos__end">Конец</button> */}
       </div>
     );
   }
