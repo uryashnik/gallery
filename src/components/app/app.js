@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ApiService from "../../services/api-service";
 import Albums from "../albums";
 import ItemsList from "../items-list";
-import "./app.css";
+import styled from 'styled-components';
 
 class App extends Component {
   state = {
@@ -61,7 +61,6 @@ class App extends Component {
 
   modalChange = () => {
     this.setState(({ modal }) => ({ modal: !modal }));
-    console.log(this.state.modal)
   };
 
   searchChange = (ev) => {
@@ -102,7 +101,7 @@ class App extends Component {
         onSelectImgId={this.selectImgId}
         imgId={imgId}
         modal={modal}
-        isModalChange={this.modalChange}
+        onModalChange={this.modalChange}
       />
     ) : (
       <Albums
@@ -115,23 +114,63 @@ class App extends Component {
 
     return (
 
-      <div className="app__container">
-        <header className="header-page">
-          <span className="search__title">Поиск</span>
-          <input type='search' className='search' onChange={this.searchChange} />
-        </header>
+      <Container>
+        <Header>
+          <TitleSearch>Поиск</TitleSearch>
+          <Search type='search' onChange={this.searchChange} />
+        </Header>
 
-        <div className='app__wrap'>
+        <ContainerWrap>
           {data && searchTerm.length !== 0 ? data.filter(this.searched(searchTerm)).map(item => {
-            return <div className='found'  key={item.id}>
-                      {/* <img src={item.thumbnailUrl} alt={item.id} /> */}
-                      <div className='found__title'>{item.title}</div>
-                    </div>
+            return <FoundItem  key={item.id}>
+                      <FoundTitle>{item.title}</FoundTitle>
+                    </FoundItem>
           }) : content }
-        </div>
-      </div>
+        </ContainerWrap>
+      </Container>
     );
   }
 }
 
 export default App;
+
+const Container = styled.div`
+  background: lightgrey;
+`;
+
+const Header = styled.div`
+  display: flex;
+  margin-bottom: 50px;
+  background-color: blueviolet;
+  padding: 20px 0;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const TitleSearch = styled.span`
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+
+const Search = styled.input`
+  margin-bottom: 10px;
+  font-weight: bold;
+`;
+
+const ContainerWrap = styled.div`
+  
+`;
+
+const FoundItem = styled.div`
+  display: flex;
+  height: 170px;
+  width: 500px;
+  border: 2px solid black;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const FoundTitle = styled.div`
+  margin-left: 5px;
+`;
