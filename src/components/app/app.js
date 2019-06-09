@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import ApiService from "../../services/api-service";
 import Albums from "../albums";
-//import Test from "../test";
-import { ReactComponent as Spinner } from "../spinner/spinner.svg";
 import ItemsList from "../items-list";
 import "./app.css";
 
@@ -33,11 +31,10 @@ class App extends Component {
         });
       })
       .catch(error => console.log(error));
-    console.log(`didMount ${this.state.isLoading}`);
   };
+
   componentDidUpdate = (prevProps, prevState) => {
     const { isLoading } = this.state;
-
     if (isLoading) {
       const timer = setTimeout(() => (this.setState((prevState) => ({ isLoading: !prevState.isLoading }))), 2000);
     };
@@ -45,7 +42,6 @@ class App extends Component {
 
   selectAlbum = albumId => {
     this.setState(state => ({ albumId: albumId }));
-
     const gallery = this.state.dataAlbums.data.filter(item => item.albumId === albumId);
     this.setState(state => ({ tempArr: gallery, length: gallery.length }));
   };
@@ -56,13 +52,11 @@ class App extends Component {
 
   changeSlider = () => {
     const { slider } = this.state;
-    console.log(slider);
     if (slider) {
       this.setState(({ slider }) => ({ slider: !slider }))
     } else {
       this.setState(({ slider }) => ({ slider: !slider, isLoading: true }))
     }
-    console.log(slider);
   };
 
   modalChange = () => {
@@ -94,7 +88,6 @@ class App extends Component {
 
   render() {
     const { posX, tempArr, isLoading, imgId, modal, searchTerm } = this.state;
-
     const { data } = this.state.dataAlbums;
     console.log(searchTerm);
     console.log(data);
@@ -122,14 +115,20 @@ class App extends Component {
 
     return (
 
-      <div className="app-container">
-        <input type='text' onChange={this.searchChange} />
-        
-        <ul>
+      <div className="app__container">
+        <header className="header-page">
+          <span className="search__title">Поиск</span>
+          <input type='search' className='search' onChange={this.searchChange} />
+        </header>
+
+        <div className='app__wrap'>
           {data && searchTerm.length !== 0 ? data.filter(this.searched(searchTerm)).map(item => {
-            return <li key={item.id}>{item.title}</li>
+            return <div className='found'  key={item.id}>
+                      {/* <img src={item.thumbnailUrl} alt={item.id} /> */}
+                      <div className='found__title'>{item.title}</div>
+                    </div>
           }) : content }
-        </ul>
+        </div>
       </div>
     );
   }
