@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ApiService from "../../services/api-service";
 import Albums from "../albums";
 //import Test from "../test";
+import { ReactComponent as Spinner } from "../spinner/spinner.svg";
 import ItemsList from "../items-list";
 import "./app.css";
 
@@ -15,7 +16,7 @@ class App extends Component {
     isLoading: false,
     tempArr: [],
     imgId: null,
-    isModalOpen: false
+    modal: false
   };
 
   apiService = new ApiService();
@@ -38,7 +39,6 @@ class App extends Component {
 
     if(isLoading){
       const timer = setTimeout(() => (this.setState((prevState) => ({isLoading: !prevState.isLoading}))), 2000);
-      console.log(`didUpdate ${isLoading}`);
     };
   }
 
@@ -64,6 +64,11 @@ class App extends Component {
     console.log(slider);
   };
 
+  modalChange = () => {
+    this.setState(({modal}) => ({modal: !modal}));
+    console.log(this.state.modal)
+  };
+
   BtnRightClick = () => {
     this.state.posX < this.state.length - 4 ? this.setState(({ posX }) => ({posX: posX + 1})) :
                                              this.setState(({length}) => ({ posX: length - 4}))
@@ -76,7 +81,7 @@ class App extends Component {
   };
 
   render() {
-    const { posX, tempArr, isLoading, imgId, isModalOpen} = this.state;
+    const { posX, tempArr, isLoading, imgId, modal} = this.state;
     console.log(imgId);
     const content = this.state.slider ? (
       <ItemsList
@@ -88,7 +93,8 @@ class App extends Component {
         onBtnLeftClick={this.BtnLeftClick}
         onSelectImgId={this.selectImgId}
         imgId={imgId}
-        isModalOpen={isModalOpen}
+        modal={modal}
+        isModalChange={this.modalChange}
       />
     ) : (
       <Albums

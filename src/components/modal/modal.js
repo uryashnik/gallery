@@ -1,7 +1,7 @@
 import React from 'react';
 import './modal.css';
 
-const Modal = ({arr, id}) => {
+const Modal = ({arr, id, modal, isModalChange}) => {
 const display = "modal";
 
 
@@ -9,11 +9,10 @@ const display = "modal";
     return(
         arr[id] ? 
         <div className={display} >
-            <button className="modal__close-button" onClick={() => {console.log("Закрыть")}}>Закрыть</button>
+            <button className="modal__close-button" onClick={() => isModalChange()}>Закрыть</button>
             <div> 
                 <img src={arr[id].url} />
             </div>
-            <div>Modal</div>
         </div> : null
     );
 
