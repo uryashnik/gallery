@@ -1,15 +1,16 @@
 import React from "react";
 //import Item from "../item";
 import "./items-list.css";
+import Modal from '../modal';
 
-const ItemsList = ({ onChangeSlider, posX, 
-                    tempArr, isLoading, 
-                    onBtnRightClick, onBtnLeftClick 
+const ItemsList = ({ onChangeSlider, posX, tempArr, isLoading, onBtnRightClick,
+                     onBtnLeftClick, onSelectImgId, imgId
                     }) => { 
-  const imagesList = tempArr.map(item => {
+  const imagesList = tempArr.map((item, id) => {
     return (
       <div className="item" key={item.id}>
-        <img src={item.thumbnailUrl} alt={item.id} />
+        <img src={item.thumbnailUrl} alt={item.id} onClick={() => {onSelectImgId(id)}}/>
+        <div className="item__title">{item.title}</div>
       </div>
     );
   });
@@ -33,15 +34,9 @@ const ItemsList = ({ onChangeSlider, posX,
         </button >
         <button onClick={() => onChangeSlider()} className="pos pos__back">К списку ...</button>
       </div>}
+      <Modal arr={tempArr} id={imgId}/>
     </div>
   );
 };
 
 export default ItemsList;
-
-  //   <div className="items" style={{ transform: `translateX(-${25 * posX}%)` }}>
-  //     <div className="item" key={posX}>
-  //       <img src={tempArr[0].thumbnailUrl} />
-  //       {/* {arr[posX]} */}
-  //     </div>
-  //   </div>;

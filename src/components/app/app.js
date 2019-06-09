@@ -11,10 +11,10 @@ class App extends Component {
     dataAlbums: {},
     albumId: 0,
     length: 0,
-    width: 160,
     slider: false,
     isLoading: false,
-    tempArr: []
+    tempArr: [],
+    imgId: null
   };
 
   apiService = new ApiService();
@@ -30,15 +30,13 @@ class App extends Component {
         });
       })
       .catch(error => console.log(error));
+      console.log(`didMount ${this.state.isLoading}`);
   };
   componentDidUpdate = (prevProps, prevState) => {
-    const {isLoading, slider} = this.state;
+    const {isLoading} = this.state;
 
-    // if(prevState.slider !== slider){
-    //   this.setState(( state ) => ({isLoading: true}));
-    // };
     if(isLoading){
-      const timer = setTimeout(() => (this.setState((state) => ({isLoading: !prevState.isLoading}))), 2000);
+      const timer = setTimeout(() => (this.setState((prevState) => ({isLoading: !prevState.isLoading}))), 2000);
       console.log(`didUpdate ${isLoading}`);
     };
   }
@@ -50,8 +48,19 @@ class App extends Component {
     this.setState(state => ({ tempArr: gallery, length: gallery.length }));
   };
 
+  selectImgId = (id) => {
+    this.setState(() => ({imgId: id}));
+  };
+
   changeSlider = () => {
-      this.setState(({ slider, isLoading }) => ({slider: !slider, isLoading: true}));
+    const {slider} = this.state;
+    console.log(slider);
+    if(slider){
+      this.setState(({slider}) => ({slider: !slider}))
+    } else {
+      this.setState(({slider}) => ({slider: !slider, isLoading: true}))
+    }
+    console.log(slider);
   };
 
   BtnRightClick = () => {
@@ -66,14 +75,18 @@ class App extends Component {
   };
 
   render() {
+    const { posX, tempArr, isLoading, imgId} = this.state;
+    console.log(imgId);
     const content = this.state.slider ? (
       <ItemsList
         onChangeSlider={this.changeSlider}
-        posX={this.state.posX}
-        tempArr={this.state.tempArr}
-        isLoading={this.state.isLoading}
+        posX={posX}
+        tempArr={tempArr}
+        isLoading={isLoading}
         onBtnRightClick={this.BtnRightClick}
         onBtnLeftClick={this.BtnLeftClick}
+        onSelectImgId={this.selectImgId}
+        imgId={imgId}
       />
     ) : (
       <Albums
