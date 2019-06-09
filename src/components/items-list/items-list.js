@@ -4,7 +4,7 @@ import "./items-list.css";
 import Modal from '../modal';
 
 const ItemsList = ({ onChangeSlider, posX, tempArr, isLoading, onBtnRightClick,
-                     onBtnLeftClick, onSelectImgId, imgId
+                     onBtnLeftClick, onSelectImgId, imgId, isModalOpen
                     }) => { 
   const imagesList = tempArr.map((item, id) => {
     return (
@@ -34,7 +34,7 @@ const ItemsList = ({ onChangeSlider, posX, tempArr, isLoading, onBtnRightClick,
         </button >
         <button onClick={() => onChangeSlider()} className="pos pos__back">К списку ...</button>
       </div>}
-      <Modal arr={tempArr} id={imgId}/>
+      <Modal arr={tempArr} id={imgId} isModalOpen={isModalOpen}/>
     </div>
   );
 };

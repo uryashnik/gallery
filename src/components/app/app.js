@@ -14,7 +14,8 @@ class App extends Component {
     slider: false,
     isLoading: false,
     tempArr: [],
-    imgId: null
+    imgId: null,
+    isModalOpen: false
   };
 
   apiService = new ApiService();
@@ -75,7 +76,7 @@ class App extends Component {
   };
 
   render() {
-    const { posX, tempArr, isLoading, imgId} = this.state;
+    const { posX, tempArr, isLoading, imgId, isModalOpen} = this.state;
     console.log(imgId);
     const content = this.state.slider ? (
       <ItemsList
@@ -87,6 +88,7 @@ class App extends Component {
         onBtnLeftClick={this.BtnLeftClick}
         onSelectImgId={this.selectImgId}
         imgId={imgId}
+        isModalOpen={isModalOpen}
       />
     ) : (
       <Albums
