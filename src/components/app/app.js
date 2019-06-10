@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ApiService from "../../services/api-service";
 import Albums from "../albums";
 import ItemsList from "../items-list";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 class App extends Component {
   state = {
@@ -15,7 +15,7 @@ class App extends Component {
     tempArr: [],
     imgId: null,
     modal: false,
-    searchTerm: ''
+    searchTerm: ""
   };
 
   apiService = new ApiService();
@@ -36,26 +36,31 @@ class App extends Component {
   componentDidUpdate = (prevProps, prevState) => {
     const { isLoading } = this.state;
     if (isLoading) {
-      const timer = setTimeout(() => (this.setState((prevState) => ({ isLoading: !prevState.isLoading }))), 2000);
-    };
-  }
+      setTimeout(
+        () => this.setState(prevState => ({ isLoading: !prevState.isLoading })),
+        2000
+      );
+    }
+  };
 
   selectAlbum = albumId => {
     this.setState(state => ({ albumId: albumId }));
-    const gallery = this.state.dataAlbums.data.filter(item => item.albumId === albumId);
+    const gallery = this.state.dataAlbums.data.filter(
+      item => item.albumId === albumId
+    );
     this.setState(state => ({ tempArr: gallery, length: gallery.length }));
   };
 
-  selectImgId = (id) => {
+  selectImgId = id => {
     this.setState(() => ({ imgId: id }));
   };
 
   changeSlider = () => {
     const { slider } = this.state;
     if (slider) {
-      this.setState(({ slider }) => ({ slider: !slider }))
+      this.setState(({ slider }) => ({ slider: !slider }));
     } else {
-      this.setState(({ slider }) => ({ slider: !slider, isLoading: true }))
+      this.setState(({ slider }) => ({ slider: !slider, isLoading: true }));
     }
   };
 
@@ -63,33 +68,32 @@ class App extends Component {
     this.setState(({ modal }) => ({ modal: !modal }));
   };
 
-  searchChange = (ev) => {
+  searchChange = ev => {
     const { value } = ev.target;
-    return this.setState((state) => ({ searchTerm: value }));
+    return this.setState(state => ({ searchTerm: value }));
   };
 
-  searched (searchTerm) {
-    return function (item) {
+  searched(searchTerm) {
+    return function(item) {
       return item.title.toLowerCase().includes(searchTerm.toLowerCase());
-    }
-  };
+    };
+  }
 
   BtnRightClick = () => {
-    this.state.posX < this.state.length - 4 ? this.setState(({ posX }) => ({ posX: posX + 1 })) :
-      this.setState(({ length }) => ({ posX: length - 4 }))
+    this.state.posX < this.state.length - 4
+      ? this.setState(({ posX }) => ({ posX: posX + 1 }))
+      : this.setState(({ length }) => ({ posX: length - 4 }));
   };
 
   BtnLeftClick = () => {
-    this.state.posX > 0 ? this.setState(({ posX }) => ({ posX: posX - 1 })) :
-      this.setState({ posX: 0 });
-
+    this.state.posX > 0
+      ? this.setState(({ posX }) => ({ posX: posX - 1 }))
+      : this.setState({ posX: 0 });
   };
 
   render() {
     const { posX, tempArr, isLoading, imgId, modal, searchTerm } = this.state;
     const { data } = this.state.dataAlbums;
-    console.log(searchTerm);
-    console.log(data);
     const content = this.state.slider ? (
       <ItemsList
         onChangeSlider={this.changeSlider}
@@ -111,21 +115,24 @@ class App extends Component {
       />
     );
 
-
     return (
-
       <Container>
         <Header>
           <TitleSearch>Поиск</TitleSearch>
-          <Search type='search' onChange={this.searchChange} />
+          <Search type="search" onChange={this.searchChange} />
         </Header>
 
         <ContainerWrap>
-          {data && searchTerm.length !== 0 ? data.filter(this.searched(searchTerm)).map(item => {
-            return <FoundItem  key={item.id}>
-                      <FoundTitle>{item.title}</FoundTitle>
-                    </FoundItem>
-          }) : content }
+          {data && searchTerm.length !== 0
+            ? data.filter(this.searched(searchTerm)).map(item => {
+                return (
+                  <FoundItem key={item.id} onClick={this.modalChange}>
+                    <FoundUrl src={item.thumbnailUrl} alt="" />
+                    <FoundTitle>{item.title}</FoundTitle>
+                  </FoundItem>
+                );
+              })
+            : content}
         </ContainerWrap>
       </Container>
     );
@@ -157,20 +164,25 @@ const Search = styled.input`
   font-weight: bold;
 `;
 
-const ContainerWrap = styled.div`
-  
-`;
+const ContainerWrap = styled.div``;
 
 const FoundItem = styled.div`
   display: flex;
   height: 170px;
   width: 500px;
-  border: 2px solid black;
+  border: 2px solid #7b68ee;
+  border-radius: 7px;
   margin-bottom: 10px;
   align-items: center;
   justify-content: flex-start;
+  background-color: #f0ffff;
 `;
 
 const FoundTitle = styled.div`
   margin-left: 5px;
+`;
+
+const FoundUrl = styled.img`
+  width: 150px;
+  height: 150px;
 `;
