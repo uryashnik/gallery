@@ -44,7 +44,7 @@ class App extends Component {
   };
 
   selectAlbum = albumId => {
-    this.setState(state => ({ albumId: albumId }));
+    this.setState(state => ({ albumId: albumId, posX: 0 }));
     const gallery = this.state.dataAlbums.data.filter(
       item => item.albumId === albumId
     );
